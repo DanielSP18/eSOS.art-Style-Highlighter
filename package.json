@@ -1,0 +1,65 @@
+{
+  "name": "esos-styling",
+  "displayName": "eSOS_Styling",
+  "description": "An extension to be used to automatically style .art files with esos rules.",
+  "version": "0.0.1",
+  "publisher": "Daniel Santos Piedrabuena",
+  "engines": {
+    "vscode": "^1.85.2"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:esos"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "esos-styling.helloWorld",
+        "title": "Hello World"
+      }
+    ],
+    "languages": [
+      {
+        "id": "esos",
+        "aliases": ["ESOS", "esos"],
+        "extensions": [".art"]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "esos",
+        "scopeName": "source.esos",
+        "path": "./syntaxes/esos.tmLanguage.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "ESOS Color Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/esos-color-theme.json"
+      }
+    ]
+  },  
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.86.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
