@@ -4,8 +4,13 @@
   "description": "An extension to be used to automatically style .art files with esos rules.",
   "version": "0.0.1",
   "publisher": "Daniel Santos Piedrabuena",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanielSP18/eSOS.art-Style-Highlighter.git"
+  },
   "engines": {
-    "vscode": "^1.85.2"
+    "vscode": "^1.86.2"
   },
   "categories": [
     "Other"
@@ -52,7 +57,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.86.0",
+    "@types/vscode": "^1.86.2",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
