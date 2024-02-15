@@ -2,7 +2,7 @@
   "name": "esos-styling",
   "displayName": "eSOS_Styling",
   "description": "An extension to be used to automatically style .art files with esos rules.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "Daniel Santos Piedrabuena",
   "license": "MIT",
   "repository": {
@@ -20,31 +20,11 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "esos-styling.helloWorld",
-        "title": "Hello World"
-      }
-    ],
     "languages": [
       {
         "id": "esos",
         "aliases": ["ESOS", "esos"],
         "extensions": [".art"]
-      }
-    ],
-    "grammars": [
-      {
-        "language": "esos",
-        "scopeName": "source.esos",
-        "path": "./syntaxes/esos.tmLanguage.json"
-      }
-    ],
-    "themes": [
-      {
-        "label": "ESOS Color Theme",
-        "uiTheme": "vs-dark",
-        "path": "./themes/esos-color-theme.json"
       }
     ]
   },  
