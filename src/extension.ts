@@ -2,81 +2,78 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-// Define decorator for bold text
-const boldDecorator = vscode.window.createTextEditorDecorationType({
-    fontWeight: 'bold'
+const ruleTitleDecorator = vscode.window.createTextEditorDecorationType({
+    fontWeight: 'bold',
+    color: '#0088ff'
 });
 
-// Define decorator for italic text
-const italicDecorator = vscode.window.createTextEditorDecorationType({
-    fontStyle: 'italic'
+const separatorDecorator = vscode.window.createTextEditorDecorationType({
+    color: '#00bb00'
 });
 
-function applyTextDecorations(editor: vscode.TextEditor) {
+const integratedDecorator = vscode.window.createTextEditorDecorationType({
+    fontStyle: 'italic',
+    color: '#FFA500'
+});
+
+const parameterDecorator = vscode.window.createTextEditorDecorationType({
+    color: '#e00280'
+});
+
+const arrowDecorator = vscode.window.createTextEditorDecorationType({
+    color: '#00bb00'
+});
+
+function applyDecorations(editor: vscode.TextEditor) {
     const text = editor.document.getText();
-    const boldRanges: vscode.DecorationOptions[] = [];
-    const italicRanges: vscode.DecorationOptions[] = [];
+    const ruleTitles: vscode.DecorationOptions[] = [];
+    const separators: vscode.DecorationOptions[] = [];
+    const integrateds: vscode.DecorationOptions[] = [];
+    const parameters: vscode.DecorationOptions[] = [];
+    const arrows: vscode.DecorationOptions[] = [];
 
-    // Regular expressions for matching your patterns
-    const boldPattern = /^-\w+/gm; // Adjust the pattern as needed
-    const italicPattern = /__\w+/g; // Adjust the pattern as needed
+    const ruleTitlePattern = /^-\w+/gm;
+    const separatorPattern = /^---/gm;
+    const integratedPattern = /__\w+/g;
+    const parameterPattern = /_\w+/g;
+    const arrowPattern = /->/g;
 
-    let match;
-    while ((match = boldPattern.exec(text))) {
-        const startPos = editor.document.positionAt(match.index);
-        const endPos = editor.document.positionAt(match.index + match[0].length);
-        const decoration = { range: new vscode.Range(startPos, endPos) };
-        boldRanges.push(decoration);
-    }
+    const addDecorations = (pattern: RegExp, decoratorArray: vscode.DecorationOptions[], decorator: vscode.TextEditorDecorationType) => {
+        let match;
+        while ((match = pattern.exec(text))) {
+            const startPos = editor.document.positionAt(match.index);
+            const endPos = editor.document.positionAt(match.index + match[0].length);
+            const decoration: vscode.DecorationOptions = { range: new vscode.Range(startPos, endPos) };
+            decoratorArray.push(decoration);
+        }
+        editor.setDecorations(decorator, decoratorArray);
+    };
 
-    while ((match = italicPattern.exec(text))) {
-        const startPos = editor.document.positionAt(match.index);
-        const endPos = editor.document.positionAt(match.index + match[0].length);
-        const decoration = { range: new vscode.Range(startPos, endPos) };
-        italicRanges.push(decoration);
-    }
-
-    // Apply the decorations
-    editor.setDecorations(boldDecorator, boldRanges);
-    editor.setDecorations(italicDecorator, italicRanges);
+    addDecorations(ruleTitlePattern, ruleTitles, ruleTitleDecorator);
+    addDecorations(separatorPattern, separators, separatorDecorator);
+    addDecorations(integratedPattern, integrateds, integratedDecorator);
+    addDecorations(parameterPattern, parameters, parameterDecorator);
+    addDecorations(arrowPattern, arrows, arrowDecorator);
 }
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	//console.log('Congratulations, your extension "esos-styling" is now active!');
-
-	if (vscode.window.activeTextEditor) {
-        applyTextDecorations(vscode.window.activeTextEditor);
+    let activeEditor = vscode.window.activeTextEditor;
+    if (activeEditor) {
+        applyDecorations(activeEditor);
     }
 
     vscode.window.onDidChangeActiveTextEditor(editor => {
         if (editor) {
-            applyTextDecorations(editor);
+            activeEditor = editor;
+            applyDecorations(activeEditor);
         }
     }, null, context.subscriptions);
 
     vscode.workspace.onDidChangeTextDocument(event => {
-        if (vscode.window.activeTextEditor && event.document === vscode.window.activeTextEditor.document) {
-            applyTextDecorations(vscode.window.activeTextEditor);
+        if (activeEditor && event.document === activeEditor.document) {
+            applyDecorations(activeEditor);
         }
     }, null, context.subscriptions);
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	// let disposable = vscode.commands.registerCommand('esos-styling.helloWorld', () => {
-	// 	// The code you place here will be executed every time your command is executed
-	// 	// Display a message box to the user
-	// 	vscode.window.showInformationMessage('Hello World from eSOS_Styling!');
-	// });
-
-	// context.subscriptions.push(disposable);
 }
 
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
