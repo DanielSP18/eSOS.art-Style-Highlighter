@@ -25,6 +25,12 @@ const arrowDecorator = vscode.window.createTextEditorDecorationType({
 });
 
 function applyDecorations(editor: vscode.TextEditor) {
+
+    // Check if the current editor's document is of the 'esos' language
+    if (editor.document.languageId !== 'esos') {
+        return; // Exit the function if not 'esos'
+    }
+
     const text = editor.document.getText();
     const ruleTitles: vscode.DecorationOptions[] = [];
     const separators: vscode.DecorationOptions[] = [];
