@@ -2,7 +2,7 @@
   "name": "esos-styling",
   "displayName": "eSOS_Styling",
   "description": "An extension to be used to automatically style .art files with esos rules.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "Daniel Santos Piedrabuena",
   "license": "MIT",
   "repository": {
